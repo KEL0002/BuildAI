@@ -5,11 +5,11 @@ build_delay: 1
 
 # Sends the formatted answer from the AI to the chat. Primarily used for debugging.
 # Values: true/false, Default: false
-sendresponse: true
+sendresponse: false
 
 # Sends the payload provided to the endpoint back to the player. Primarily used for debugging.
 # Values: true/false, Default: false
-sendpayload: true
+sendpayload: false
 
 # When enabled, the first position given to the AI will always be (0, 0, 0), and the second position will reflect the build's dimensions.
 # The AI will then adjust the coordinates to align with the selected position.

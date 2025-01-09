@@ -27,7 +27,7 @@ public final class BuildAI extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        saveConfig();
+
     }
 
 

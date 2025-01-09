@@ -30,4 +30,14 @@ public final class BuildAI extends JavaPlugin {
         saveConfig();
     }
 
+
+    public static boolean isWorldEditAvailable() {
+    try {
+        Class.forName("com.sk89q.worldedit.WorldEdit");
+        return true;
+    } catch (ClassNotFoundException e) {
+        return false;
+    }
+}
+
 }

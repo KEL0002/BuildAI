@@ -59,22 +59,26 @@ public class Generate implements CommandExecutor {
             pos1 = normalised_locations[0];
             pos2 = normalised_locations[1];
         } else {
-            pos1 = WorldEditUtil.getPos1(player);
-            pos2 = WorldEditUtil.getPos2(player);
+            if (BuildAI.isWorldEditAvailable()){
+                pos1 = WorldEditUtil.getPos1(player);
+                pos2 = WorldEditUtil.getPos2(player);
+
+            } else {
+                pos1 = null;
+                pos2 = null;
+            }
         }
 
 
         if (pos1 == null || pos2 == null) {
             sendFeedback(commandSender, "error.selection");
+            sendFeedback(commandSender, "error.usage");
             return false;
         }
 
-        Map<String, Object> input_and_overwrites = get_input_and_overwrites(args);
-        HashMap<String, String> overwrites;
-        String input;
-
-        input =  input_and_overwrites.get("input").toString();
-        overwrites = (HashMap<String, String>) input_and_overwrites.get("overwrites");
+        Map<String, Object> input_and_overwrites = get_input_and_overwrites(args, coordinates_provided);
+        HashMap<String, String> overwrites = (HashMap<String, String>) input_and_overwrites.get("overwrites");
+        String input =  input_and_overwrites.get("input").toString();
 
         String model_preset = args[0];
 
@@ -87,17 +91,22 @@ public class Generate implements CommandExecutor {
                 overwrites);
     }
 
-    public Map<String, Object> get_input_and_overwrites(String[] args){
+    public Map<String, Object> get_input_and_overwrites(String[] args, boolean coordinates_provided) {
         HashMap<String, String> overwrites = new HashMap<>();
         StringBuilder input = new StringBuilder();
 
+        int skipCount = coordinates_provided ? 7 : 1;
         boolean isFirstArgument = true;
 
-        for (String string : args) {
+        for (int i = 0; i < args.length; i++) {
             if (isFirstArgument) {
                 isFirstArgument = false;
                 continue;
             }
+            if (i < skipCount) {
+                continue;
+            }
+            String string = args[i];
             if (string.contains("=")) {
                 String[] parts = string.split("=", 2);
                 overwrites.put("%" + parts[0] + "%", parts[1]);
@@ -115,6 +124,7 @@ public class Generate implements CommandExecutor {
 
         return result;
     }
+
 
 
 

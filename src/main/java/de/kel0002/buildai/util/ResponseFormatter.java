@@ -40,7 +40,7 @@ public class ResponseFormatter {
                 line = line.substring(1).trim();
             }
 
-            while (line.endsWith("\\n") || !endsWithAny(line, getLettersAndNumbers())) {
+            while (line.endsWith("\\n") || !endsWithAny(line, getLettersAndNumbers()) && !(line.isEmpty())) {
                 if (line.endsWith("\\n")) {
                     line = line.substring(0, line.length() - 2).trim();
                 } else {

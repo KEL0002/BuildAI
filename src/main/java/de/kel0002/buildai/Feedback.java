@@ -36,7 +36,7 @@ public class Feedback {
         switch (name){
             case "error.not_a_player": return "§4You have to be a player to perform this command";
             case "error.selection": return "§4Please provide the coordinates in the area you want to be build or make a selection using WorldEdit";
-            case "error.usage": return "§4Usage: /generate x1 y1 z1 x2 y2 z2 model_preset prompt or /generate model_preset prompt with a WorldEdit selection";
+            case "error.usage": return "§4Usage: §o/generate X1 Y1 Z1 X2 Y2 Z2 MODEL_PRESET PROMPT §r§4or §o/generate MODEL_PRESET PROMPT with a WorldEdit selection";
 
             case "error.config.prompt": return "§4Could not get the prompt from the config.yml file. Check for incorrect formatting or try deleting it";
             case "error.unset_vars": return "§4The following variable(s) are not set: {param}. Set them by including SomeVariable=SomeValue in your input";

@@ -23,17 +23,17 @@ relative_coordinates: true
 #   %X1%, %Y1%, %Z1%, %X2%, %Y2%, %Z2% - Coordinates of the build area selected with WorldEdit/commands.
 #   %SomeOtherVar% - Any additional variable set by the user in the command (e.g., SomeOtherVar=SomeValue).
 # Prompt must strictly return a list of commands without comments or additional explanations.
-prompt: >
-  Answer only with a list of Minecraft commands that can be executed sequentially to generate the following structure: %input% in the area from
+prompt:
+  "Answer only with a list of Minecraft commands that can be executed sequentially to generate the following structure: %input% in the area from
   %X1% %Y1% %Z1% to %X2% %Y2% %Z2%. You have access to the following commands:
   /sb x y z BLOCK - Sets the block at the specified coordinates. Do not use /setblock.
   /fill x y z x2 y2 z2 BLOCK - Fills the specified area with the block.
-  Respond only with this list; do not include comments or extra explanations. You may use up to 300 commands.
+  Respond only with this list; do not include comments or extra explanations. You may use up to 300 commands."
 
 # List of available model presets.
 # This must be kept in sync with the models defined below for proper tab-completion functionality.
 model_list:
-  - "ollama_Gemma2"
+  - "ollama_gemma2"
   - "ollama_custom"
 
 # Presets available to players in-game.

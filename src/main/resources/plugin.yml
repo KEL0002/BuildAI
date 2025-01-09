@@ -1,0 +1,14 @@
+name: BuildAI
+version: '1.0'
+main: de.kel0002.buildai.BuildAI
+api-version: '1.13'
+commands:
+  aigenerate:
+    description: Generate structures using AI
+    permission: buildai.use
+  aigen:
+    description: Generate structures using AI
+    permission: buildai.use
+  buildai:
+    description: Generate structures using AI
+    permission: buildai.use

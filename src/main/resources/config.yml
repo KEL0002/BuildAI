@@ -1,52 +1,53 @@
-#Delay in ticks (1/20s) between each command execution when the AI is building.
-#0 will build every structure instantly (after the response is gotten), but does not look as cool
-#Values: Integers, Default: 1
+# Delay in ticks (1/20 second per tick) between each command execution when the AI is building.
+# Setting this to 0 will make the AI build all structures instantly (after the response is received), but it may not look as smooth.
+# Values: Integers, Default: 1
 build_delay: 1
 
-
-#Sends the formatted answer of the AI in chat (mainly for debugging purposes)
+# Sends the formatted answer from the AI to the chat. Primarily used for debugging.
 # Values: true/false, Default: false
 sendresponse: true
 
-#Sends the payload that was given to the endpoint to the player (mainly for debugging purposes)
+# Sends the payload provided to the endpoint back to the player. Primarily used for debugging.
 # Values: true/false, Default: false
 sendpayload: true
 
-# When true, the first position given to the model will always be 0 0 0 and the second position will resemble the size of the build.
-# The coordinates will then get aligned to be at the selected position
-# This gives the model more orientation, since it does not have to deal with negative or high numbers
+# When enabled, the first position given to the AI will always be (0, 0, 0), and the second position will reflect the build's dimensions.
+# The AI will then adjust the coordinates to align with the selected position.
+# This ensures the AI doesn't have to handle negative or overly large numbers, improving orientation.
 # Values: true/false, Default: true
 relative_coordinates: true
 
+# The prompt template provided to the AI.
+# Variables:
+#   %input% - The user's description of the desired structure.
+#   %X1%, %Y1%, %Z1%, %X2%, %Y2%, %Z2% - Coordinates of the build area selected with WorldEdit/commands.
+#   %SomeOtherVar% - Any additional variable set by the user in the command (e.g., SomeOtherVar=SomeValue).
+# Prompt must strictly return a list of commands without comments or additional explanations.
+prompt: >
+  Answer only with a list of Minecraft commands that can be executed sequentially to generate the following structure: %input% in the area from
+  %X1% %Y1% %Z1% to %X2% %Y2% %Z2%. You have access to the following commands:
+  /sb x y z BLOCK - Sets the block at the specified coordinates. Do not use /setblock.
+  /fill x y z x2 y2 z2 BLOCK - Fills the specified area with the block.
+  Respond only with this list; do not include comments or extra explanations. You may use up to 300 commands.
 
-#The prompt that is given to the AI
-#Variables: %input% prompt given by the user in chat
-#       %X1% %Y1% %Z1% %X2% %Y2% %Z2% - Coordinates of the area to be build (selected with WorldEdit/ command)
-#       %SomeOtherVar% variable that has to be set by the user by including SomeOtherVar=SomeValue in the command
-prompt: "Answer only with a list of minecraft commands which can be chronologically executed to generate the following structure: %input% in the area from
-        %X1% %Y1% %Z1% to %X2% %Y2% %Z2%. You have access to the following commands - 
-        /sb x y z BLOCK - sets the block at the provided coordinates. Do not use /setblock.
-        /fill x y z x2 y2 z2 BLOCK - fills the provided area with the block.
-        Only answer with this list, do not comment on anything. You can use up to 300 commands. You have to answer with all commands that need to be run"
-
-#List of all model presets
-#I realy could not figure out how to get it directly from the bottom, so you have to also insert it here to have a working tab-completer
+# List of available model presets.
+# This must be kept in sync with the models defined below for proper tab-completion functionality.
 model_list:
   - "ollama_Gemma2"
   - "ollama_custom"
 
-
-#List of presets the players can use ingame
-#Variables: %prompt% the prompt that was prevouisly configured
-#       %seed% random number between 0 and 99999
-#       %SomeOtherVar% variable that has to be set by the user by including SomeOtherVar=SomeValue in the command
+# Presets available to players in-game.
+# Variables:
+#   %prompt% - The AI prompt configured above.
+#   %seed% - A random number between 0 and 99999, used for randomization.
+#   %SomeOtherVar% - Any user-defined variable.
 models:
-  ollama_Gemma2:
+  ollama_gemma2:
     endpoint: http://localhost:11434/api/generate
     payload:
       - model: "gemma2:latest"
       - prompt: "%prompt%"
-      - stream: false # Streamed responses are not supported
+      - stream: false # Streaming responses are not supported.
       - seed: "%seed%"
 
   ollama_custom:

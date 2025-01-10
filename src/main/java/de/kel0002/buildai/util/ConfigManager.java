@@ -2,10 +2,8 @@ package de.kel0002.buildai.util;
 
 import de.kel0002.buildai.BuildAI;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
 
 import java.util.*;
 
@@ -23,6 +21,7 @@ public class ConfigManager {
 
             List<?> configpayload = config.getList(payloadpath);
 
+            if (configpayload == null) return null;
             for (Object singledic : configpayload){
 
                 if (singledic instanceof LinkedHashMap){

@@ -47,7 +47,7 @@ models:
     payload:
       - model: "gemma2:latest"
       - prompt: "%prompt%"
-      - stream: false # Streaming responses are not supported.
+      - stream: false # Streamed responses are not supported.
       - seed: "%seed%"
 
   ollama_custom:

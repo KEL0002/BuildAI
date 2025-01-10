@@ -30,11 +30,17 @@ public class Generate implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, org.bukkit.command.@NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
+
         if (!(commandSender instanceof Player)) {
             sendFeedback(commandSender, "error.not_a_player");
             return false;
         }
         Player player = (Player) commandSender;
+
+        if (args.length <= 1){
+            sendFeedback(commandSender, "error.usage");
+            return false;
+        }
 
         boolean coordinates_provided = true;
         if (args.length > 7){

@@ -10,15 +10,17 @@ public class Help implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
 
-        sendMessage(sender, "§lBuildAIs command and usage:");
-        sendMessage(sender, " /aigen model_preset x1 y1 z1 x2 y2 z2 somevar=somevalue prompt");
-        sendMessage(sender, "The model_preset is a configuration for specific models that was given in the config");
-        sendMessage(sender, " You can figure out what options you have by using the Tab-Completer");
-        sendMessage(sender, "x1-z2 refers to the area you want to fill. You do not need to specify the area if you have a WorldEdit selection");
-        sendMessage(sender, "You can set a variable to a value using somevar=somevalue anywhere after the area specification.");
-        sendMessage(sender, " Variables were defined by the server owner in the config. ");
-        sendMessage(sender, " §lIf the server asks you to set an api key, be careful: the api key will be visible in the server console");
-        sendMessage(sender, "The prompt (input) is the input that will be edited according to the config and then send to the endpoint.");
+        sendMessage(sender, "§6§lBuildAI Command Usage:");
+        sendMessage(sender, "§e/aigen MODEL_PRESET X1 Y1 Z1 X2 Y2 Z2 SOMEVAR=SOMEVALUE PROMPT");
+        sendMessage(sender, "§7- §f§lmodel_preset:§r A configuration for specific AI models, defined in the config. Use the Tab-Completer to view available presets.");
+        sendMessage(sender, "§7- §f§lx1 y1 z1 x2 y2 z2:§r The coordinates defining the area to fill. If you have a WorldEdit selection, this step is optional.");
+        sendMessage(sender, "§7- §f§lsomevar=somevalue:§r Set a variable to a specific value. Variables are defined by the server owner in the config. This can be put anywhere after the coordinates.");
+        sendMessage(sender, "§7- §f§lprompt:§r The input text that the AI will use to generate the structure.");
+        sendMessage(sender, " ");
+        sendMessage(sender, "§6Additional Notes:");
+        sendMessage(sender, "§7- §fAPI Keys: If the server requests an API key, be cautious. API keys will be visible in the server console.");
+        sendMessage(sender, "§7- §fThe prompt will be formatted according to the configuration before being sent to the AI model.");
+
 
 
 
@@ -28,6 +30,6 @@ public class Help implements CommandExecutor {
 
 
     public void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage("§8[§3Build§5AI§8] §f" + message);
+        sender.sendMessage("§f" + message);
     }
 }

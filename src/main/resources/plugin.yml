@@ -1,5 +1,5 @@
 name: BuildAI
-version: '0.1-1'
+version: '0.1-2'
 main: de.kel0002.buildai.BuildAI
 api-version: '1.13'
 commands:

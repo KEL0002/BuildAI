@@ -13,6 +13,8 @@ public final class BuildAI extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         instance = this;
+
+
         this.getCommand("aigenerate").setExecutor(new Generate());
         this.getCommand("aigen").setExecutor(new Generate());
 
@@ -20,6 +22,10 @@ public final class BuildAI extends JavaPlugin {
         this.getCommand("aigenerate").setTabCompleter(new GenerateTabCompletion());
 
         this.getCommand("buildai").setExecutor(new Help());
+
+
+        int pluginId = 24540;
+        Metrics metrics = new Metrics(this, pluginId);
     }
     public static BuildAI getInstance(){
             return instance;

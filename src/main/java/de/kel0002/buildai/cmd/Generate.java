@@ -2,10 +2,10 @@ package de.kel0002.buildai.cmd;
 
 import de.kel0002.buildai.BuildAI;
 import de.kel0002.buildai.Feedback;
+import de.kel0002.buildai.Selection.Selection;
 import de.kel0002.buildai.util.ConfigManager;
 import de.kel0002.buildai.util.RequestHandler;
 import de.kel0002.buildai.util.ResponseFormatter;
-import de.kel0002.buildai.util.WorldEditUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -65,20 +65,13 @@ public class Generate implements CommandExecutor {
             pos1 = normalised_locations[0];
             pos2 = normalised_locations[1];
         } else {
-            if (BuildAI.isWorldEditAvailable()){
-                pos1 = WorldEditUtil.getPos1(player);
-                pos2 = WorldEditUtil.getPos2(player);
-
-            } else {
-                pos1 = null;
-                pos2 = null;
-            }
+            pos1 = Selection.getPos1(player);
+            pos2 = Selection.getPos2(player);
         }
 
 
         if (pos1 == null || pos2 == null) {
             sendFeedback(commandSender, "error.selection");
-            sendFeedback(commandSender, "error.usage");
             return false;
         }
 
@@ -224,14 +217,13 @@ public class Generate implements CommandExecutor {
             sendFeedback(player, "done.done");
             actionBarTask2.cancel();
             Feedback.clearActionBar(player);
-            }, ((long) finished_cmd_list.size()*build_delay));
+            }, ((long) finished_cmd_list.size()*build_delay+1));
     }
 
     public void scheduleBuildTasks(ArrayList<String> finished_cmd_list, boolean use_relative_cords, Player player,
                                    int x1, int y1, int z1){
 
         int build_delay = BuildAI.getInstance().getConfig().getInt("build_delay");
-
         Bukkit.getScheduler().runTask(BuildAI.getInstance(), () -> {
             for (int i = 0; i < finished_cmd_list.size(); i++) {
                 String cmd = finished_cmd_list.get(i);

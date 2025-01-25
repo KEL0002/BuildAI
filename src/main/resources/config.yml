@@ -11,7 +11,7 @@ sendresponse: false
 # Values: true/false, Default: false
 sendpayload: false
 
-# When enabled, the first position given to the AI will always be (0, 0, 0), and the second position will reflect the build's dimensions.
+# When enabled, the first position given to the AI will always be (0, 0, 0), and the second position will reflect the size of the area.
 # The AI will then adjust the coordinates to align with the selected position.
 # This ensures the AI doesn't have to handle negative or overly large numbers, improving orientation.
 # Values: true/false, Default: true
@@ -20,7 +20,7 @@ relative_coordinates: true
 # The prompt template provided to the AI.
 # Variables:
 #   %input% - The user's description of the desired structure.
-#   %X1%, %Y1%, %Z1%, %X2%, %Y2%, %Z2% - Coordinates of the build area selected with WorldEdit/commands.
+#   %X1%, %Y1%, %Z1%, %X2%, %Y2%, %Z2% - Coordinates of the build area selected by the player.
 #   %SomeOtherVar% - Any additional variable set by the user in the command (e.g., SomeOtherVar=SomeValue).
 # Prompt must strictly return a list of commands without comments or additional explanations.
 prompt:
@@ -36,11 +36,11 @@ model_list:
   - "ollama_gemma2"
   - "ollama_custom"
 
-# Presets available to players in-game.
+# Presets available to players.
 # Variables:
 #   %prompt% - The AI prompt configured above.
-#   %seed% - A random number between 0 and 99999, used for randomization.
-#   %SomeOtherVar% - Any user-defined variable.
+#   %seed% - A random number between 0 and 99999.
+#   %SomeOtherVar% - Any variable defined you.
 models:
   ollama_gemma2:
     endpoint: http://localhost:11434/api/generate

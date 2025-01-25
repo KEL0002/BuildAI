@@ -35,8 +35,8 @@ public class Feedback {
     public static String getfeedbackMSG(String name){
         switch (name){
             case "error.not_a_player": return "§4You have to be a player to perform this command";
-            case "error.selection": return "§4Please provide the coordinates in the area you want to be build or make a selection using WorldEdit";
-            case "error.usage": return "§4Usage: §o/generate X1 Y1 Z1 X2 Y2 Z2 MODEL_PRESET PROMPT §r§4or §o/generate MODEL_PRESET PROMPT with a WorldEdit selection";
+            case "error.selection": return "§4Please provide the coordinates in the area you want to be build or make a selection using a wooden shovel";
+            case "error.usage": return "§4Usage: §o/generate X1 Y1 Z1 X2 Y2 Z2 MODEL_PRESET PROMPT §r§4or §o/generate MODEL_PRESET PROMPT with a selection (make a selection using a wooden shovel)";
 
             case "error.config.prompt": return "§4Could not get the prompt from the config.yml file. Check for incorrect formatting or try deleting it";
             case "error.unset_vars": return "§4The following variable(s) are not set: {param}. Set them by including SomeVariable=SomeValue in your input";
@@ -48,6 +48,8 @@ public class Feedback {
             case "error.setblock": return "§cError executing the setblock command provided by the AI: /{param}";
             case "error.fill": return "§cError executing the fill command provided by the AI: /{param}";
 
+            case "info.selection.pos1": return "§fFirst position set to {param}";
+            case "info.selection.pos2": return "§fSecond position set to {param}";
 
             case "info.structure": return "§7You tasked the AI to build '{param}'";
             case "info.payload": return "§fPayload: §7{param}";

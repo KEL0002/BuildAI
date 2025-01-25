@@ -1,8 +1,10 @@
 package de.kel0002.buildai;
 
+import de.kel0002.buildai.Selection.SelectionListener;
 import de.kel0002.buildai.cmd.Generate;
 import de.kel0002.buildai.cmd.GenerateTabCompletion;
 import de.kel0002.buildai.cmd.Help;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BuildAI extends JavaPlugin {
@@ -23,6 +25,8 @@ public final class BuildAI extends JavaPlugin {
 
         this.getCommand("buildai").setExecutor(new Help());
 
+        Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
+
 
         int pluginId = 24540;
         Metrics metrics = new Metrics(this, pluginId);
@@ -33,17 +37,5 @@ public final class BuildAI extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
     }
-
-
-    public static boolean isWorldEditAvailable() {
-    try {
-        Class.forName("com.sk89q.worldedit.WorldEdit");
-        return true;
-    } catch (ClassNotFoundException e) {
-        return false;
-    }
-}
-
 }

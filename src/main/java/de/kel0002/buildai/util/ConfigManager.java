@@ -51,6 +51,8 @@ public class ConfigManager {
         FileConfiguration config = BuildAI.getInstance().getConfig();
         ArrayList<String> modelNames = new ArrayList<>();
 
+        if (config.getList("model_list") == null) return modelNames;
+
         for (Object s : config.getList("model_list")){
             modelNames.add(String.valueOf(s));
         }

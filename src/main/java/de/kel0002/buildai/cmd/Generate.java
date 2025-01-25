@@ -2,6 +2,7 @@ package de.kel0002.buildai.cmd;
 
 import de.kel0002.buildai.BuildAI;
 import de.kel0002.buildai.Feedback;
+import de.kel0002.buildai.Selection.FancySelectionBox;
 import de.kel0002.buildai.Selection.Selection;
 import de.kel0002.buildai.util.ConfigManager;
 import de.kel0002.buildai.util.RequestHandler;
@@ -151,9 +152,18 @@ public class Generate implements CommandExecutor {
 
         final boolean use_relative_cords = BuildAI.getInstance().getConfig().getBoolean("relative_coordinates");
 
+        FancySelectionBox boxclass = Selection.get_boxclass(player);
+
+        if (boxclass == null){
+            boxclass = new FancySelectionBox(player);
+            boxclass.start_drawing_box(true);
+        }
+
+
+        boxclass.switch_to_generating();
+
+
         BukkitTask actionBarTask = runActionBarTask("wait.generating.actionbar", player);
-
-
 
 
         sendFeedback(player,"info.structure", input);
@@ -162,8 +172,7 @@ public class Generate implements CommandExecutor {
 
 
         if (payload == null){
-            sendFeedback(player, "error.model_preset_payload");
-            actionBarTask.cancel();
+            stop_error(player, "error.model_preset_payload", actionBarTask, boxclass);
             return;
         }
 
@@ -176,8 +185,7 @@ public class Generate implements CommandExecutor {
 
         List<String> unset_vars = ConfigManager.getVarsinDictionary(payload);
         if (unset_vars != null){
-            sendFeedback(player, "error.unset_vars", unset_vars.toString());
-            actionBarTask.cancel();
+            stop_error(player, "error.unset_vars", actionBarTask, boxclass);
             return;
         }
 
@@ -187,22 +195,20 @@ public class Generate implements CommandExecutor {
 
 
         if (response_all == null){
-            sendFeedback(player, "error.request");
-            actionBarTask.cancel();
+            stop_error(player, "error.request", actionBarTask, boxclass);
             return;
         }
 
         String response = ResponseFormatter.extractResponseField(response_all);
         if (response == null){
+            stop_error(player, null, actionBarTask, boxclass);
             sendFeedback(player, "error.request.extract", response_all);
-            actionBarTask.cancel();
             return;
         }
 
         ArrayList<String> response_array = ResponseFormatter.extractResponseLines(response);
 
         actionBarTask.cancel();
-
         BukkitTask actionBarTask2 = runActionBarTask("wait.placing.actionbar", player);
 
         ArrayList<String> finished_cmd_list = get_finished_cmd_list(response_array, player);
@@ -213,11 +219,22 @@ public class Generate implements CommandExecutor {
 
 
         int build_delay = BuildAI.getInstance().getConfig().getInt("build_delay");
+
+        FancySelectionBox finalBoxclass = boxclass;
+
+
         Bukkit.getScheduler().runTaskLater(BuildAI.getInstance(), () -> {
             sendFeedback(player, "done.done");
             actionBarTask2.cancel();
+            finalBoxclass.stop();
             Feedback.clearActionBar(player);
             }, ((long) finished_cmd_list.size()*build_delay+1));
+    }
+
+    public void stop_error(Player player, String error, BukkitTask actionbartask, FancySelectionBox boxclass){
+        if (error != null) sendFeedback(player, error);
+        actionbartask.cancel();
+        boxclass.stop();
     }
 
     public void scheduleBuildTasks(ArrayList<String> finished_cmd_list, boolean use_relative_cords, Player player,

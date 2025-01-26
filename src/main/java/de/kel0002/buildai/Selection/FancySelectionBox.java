@@ -16,9 +16,9 @@ public class FancySelectionBox {
     Location pos2;
     boolean is_in_generation_mode = false;
 
-    public FancySelectionBox(Player player){
-        this.pos1 = Selection.getPos1(player);
-        this.pos2 = Selection.getPos2(player);
+    public FancySelectionBox(Location pos1, Location pos2){
+        this.pos1 = pos1;
+        this.pos2 = pos2;
 
     }
 

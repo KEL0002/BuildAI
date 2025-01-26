@@ -32,7 +32,7 @@ public class Selection {
             return;
         }
         if (boxmap.get(player) != null && !boxmap.get(player).is_in_generation_mode) boxmap.get(player).stop();
-        FancySelectionBox boxclass = new FancySelectionBox(player);
+        FancySelectionBox boxclass = new FancySelectionBox(getPos1(player), getPos2(player));
         boxclass.start_drawing_box(false);
         boxmap.put(player, boxclass);
     }

@@ -1,6 +1,6 @@
 #Controlls how many particles per block are shown for a selection/while generating
 # Values: Integers, Default: 5
-particles_per_block: 0
+particles_per_block: 5
 
 
 # Delay in ticks (1/20 second per tick) between each command execution when the AI is building.

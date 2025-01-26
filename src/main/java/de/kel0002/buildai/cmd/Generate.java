@@ -88,7 +88,8 @@ public class Generate implements CommandExecutor {
                 pos2.getBlockX(), pos2.getBlockY(), pos2.getBlockZ(),
                 input,
                 model_preset,
-                overwrites);
+                overwrites,
+                coordinates_provided);
     }
 
     public Map<String, Object> get_input_and_overwrites(String[] args, boolean coordinates_provided) {
@@ -129,13 +130,13 @@ public class Generate implements CommandExecutor {
 
 
 
-    public boolean performGeneration_async(Player player, int x1, int y1, int z1, int x2, int y2, int z2, String input, String model_preset, HashMap<String, String> payload_overwrites){
+    public boolean performGeneration_async(Player player, int x1, int y1, int z1, int x2, int y2, int z2, String input, String model_preset, HashMap<String, String> payload_overwrites, boolean coordinates_provided){
         new BukkitRunnable() {
             @Override
             public void run() {
                     performGeneration(player, x1, y1, z1,
                     x2, y2, z2,
-                    input, model_preset, payload_overwrites);
+                    input, model_preset, payload_overwrites, coordinates_provided);
                 }
             }.runTaskAsynchronously(BuildAI.getInstance());
         return true;
@@ -143,7 +144,7 @@ public class Generate implements CommandExecutor {
 
 
 
-    public void performGeneration(Player player, int x1, int y1, int z1, int x2, int y2, int z2, String input, String model_preset, HashMap<String, String> payload_overwrites){
+    public void performGeneration(Player player, int x1, int y1, int z1, int x2, int y2, int z2, String input, String model_preset, HashMap<String, String> payload_overwrites, boolean coordinates_provided){
         final String prompt = BuildAI.getInstance().getConfig().getString("prompt");
         if (prompt == null){
             sendFeedback(player,"error.config.prompt");
@@ -154,8 +155,10 @@ public class Generate implements CommandExecutor {
 
         FancySelectionBox boxclass = Selection.get_boxclass(player);
 
-        if (boxclass == null){
-            boxclass = new FancySelectionBox(player);
+        if (boxclass == null || coordinates_provided){
+            Location pos1 = new Location(player.getWorld(), x1, y1, z1);
+            Location pos2 = new Location(player.getWorld(), x2, y2, z2);
+            boxclass = new FancySelectionBox(pos1, pos2);
             boxclass.start_drawing_box(true);
         }
 

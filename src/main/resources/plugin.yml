@@ -1,14 +1,22 @@
 name: BuildAI
+
 version: '${project.version}'
+description: Allows Large Language Models (AI) to build structures
+author: KEL0002
+website: https://modrinth.com/plugin/buildai
 main: de.kel0002.buildai.BuildAI
+
 api-version: '1.13'
 commands:
   aigenerate:
-    description: Generate structures using AI
+    usage: /aigenerate <model_preset> <prompt>
     permission: buildai.use
   aigen:
-    description: Generate structures using AI
+    usage: /aigen <model_preset> <prompt>
     permission: buildai.use
   buildai:
-    description: Generate structures using AI
     permission: buildai.use
+
+permissions:
+  buildai.use:
+    description: Allows you to use the BuildAI plugin

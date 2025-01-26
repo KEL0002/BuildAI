@@ -23,6 +23,8 @@ public class FancySelectionBox {
     }
 
     public void start_drawing_box(boolean generating) {
+        int particles_per_block = BuildAI.getInstance().getConfig().getInt("particles_per_block");
+        double step_amount = (double) 1/particles_per_block;
 
         Color color = Color.AQUA;
 
@@ -42,8 +44,8 @@ public class FancySelectionBox {
         double maxZ = Math.max(pos1.getZ(), pos2.getZ()) + 1;
         
         particleTask = Bukkit.getScheduler().runTaskTimer(BuildAI.getInstance(), () -> {
-
-            for (double x = minX; x <= maxX; x += 0.2) {
+            if (particles_per_block == 0) return;
+            for (double x = minX; x <= maxX; x += step_amount) {
 
                 pos1.getWorld().spawnParticle(particle, x, minY, minZ, 0, dustOptions);
                 pos1.getWorld().spawnParticle(particle, x, minY, maxZ, 0, dustOptions);
@@ -52,7 +54,7 @@ public class FancySelectionBox {
                 pos1.getWorld().spawnParticle(particle, x, maxY, maxZ, 0, dustOptions);
             }
 
-            for (double z = minZ; z <= maxZ; z += 0.2) {
+            for (double z = minZ; z <= maxZ; z += step_amount) {
                 pos1.getWorld().spawnParticle(particle, minX, minY, z, 0, dustOptions);
                 pos1.getWorld().spawnParticle(particle, maxX, minY, z, 0, dustOptions);
 
@@ -60,7 +62,7 @@ public class FancySelectionBox {
                 pos1.getWorld().spawnParticle(particle, maxX, maxY, z, 0, dustOptions);
             }
 
-            for (double y = minY; y <= maxY; y += 0.2) {
+            for (double y = minY; y <= maxY; y += step_amount) {
                 pos1.getWorld().spawnParticle(particle, minX, y, minZ, 0, dustOptions);
                 pos1.getWorld().spawnParticle(particle, minX, y, maxZ, 0, dustOptions);
 

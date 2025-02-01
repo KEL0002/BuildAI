@@ -2,7 +2,6 @@
 # Values: Integers, Default: 5
 particles_per_block: 5
 
-
 # Delay in ticks (1/20 second per tick) between each command execution when the AI is building.
 # Setting this to 0 will make the AI build all structures instantly (after the response is received), but it may not look as smooth.
 # Values: Integers, Default: 1

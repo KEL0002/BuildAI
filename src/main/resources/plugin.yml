@@ -9,10 +9,8 @@ main: de.kel0002.buildai.BuildAI
 api-version: '1.13'
 commands:
   aigenerate:
-    usage: /aigenerate <model_preset> <prompt>
     permission: buildai.use
   aigen:
-    usage: /aigen <model_preset> <prompt>
     permission: buildai.use
   buildai:
     permission: buildai.use

@@ -12,7 +12,7 @@ public class SelectionListener implements Listener {
     public void onClick(PlayerInteractEvent event){
         if (event.getItem() == null) return;
         if (event.getItem().getType() != Material.WOODEN_SHOVEL) return;
-        if (!event.getPlayer().isOp()) return;
+        if (!event.getPlayer().hasPermission("buildai.use")) return;
         if (event.getClickedBlock() == null) return;
 
         if (event.getAction().isLeftClick()){

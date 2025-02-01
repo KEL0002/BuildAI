@@ -66,8 +66,11 @@ public class Generate implements CommandExecutor {
             pos1 = normalised_locations[0];
             pos2 = normalised_locations[1];
         } else {
-            pos1 = Selection.getPos1(player);
-            pos2 = Selection.getPos2(player);
+            Location[] normalised_locations = normalizeLocations(
+                    Selection.getPos1(player),
+                    Selection.getPos2(player));
+            pos1 = normalised_locations[0];
+            pos2 = normalised_locations[1];
         }
 
 

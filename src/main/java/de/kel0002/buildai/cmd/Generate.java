@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static de.kel0002.buildai.Feedback.sendFeedback;
 import static de.kel0002.buildai.util.ConfigManager.replaceInDictionary;
@@ -66,6 +67,11 @@ public class Generate implements CommandExecutor {
             pos1 = normalised_locations[0];
             pos2 = normalised_locations[1];
         } else {
+            if (Selection.getPos1(player) == null || Selection.getPos2(player) == null) {
+                sendFeedback(commandSender, "error.selection");
+                return false;
+            }
+
             Location[] normalised_locations = normalizeLocations(
                     Selection.getPos1(player),
                     Selection.getPos2(player));
@@ -191,7 +197,10 @@ public class Generate implements CommandExecutor {
 
         List<String> unset_vars = ConfigManager.getVarsinDictionary(payload);
         if (unset_vars != null){
-            stop_error(player, "error.unset_vars", actionBarTask, boxclass);
+            String param = unset_vars.stream()
+                    .map(s -> "'" + s.replaceAll("^%|%$", "") + "'") // Remove '%' and add quotes
+                    .collect(Collectors.joining(", "));
+            stop_error(player, "error.unset_vars", param ,actionBarTask, boxclass);
             return;
         }
 
@@ -238,7 +247,11 @@ public class Generate implements CommandExecutor {
     }
 
     public void stop_error(Player player, String error, BukkitTask actionbartask, FancySelectionBox boxclass){
-        if (error != null) sendFeedback(player, error);
+        stop_error(player, error, "", actionbartask, boxclass);
+    }
+
+    public void stop_error(Player player, String error, String param, BukkitTask actionbartask, FancySelectionBox boxclass){
+        if (error != null) sendFeedback(player, error, param);
         actionbartask.cancel();
         boxclass.stop();
     }

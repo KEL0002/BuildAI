@@ -6,7 +6,7 @@
 
   <groupId>de.kel0002</groupId>
   <artifactId>BuildAI</artifactId>
-  <version>1.0-0</version>
+  <version>1.0-1</version>
   <packaging>jar</packaging>
 
   <name>BuildAI</name>
